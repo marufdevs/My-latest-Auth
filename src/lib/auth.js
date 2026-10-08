@@ -3,11 +3,17 @@ import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
 const client = new MongoClient(process.env.BETTER_AUTH_DB_URL);
-const db = client.db("Latest Auth");
+const db = client.db("Latest_Auth");
 
 export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
+    },
+    socialProviders: {
+        google: { 
+            clientId: process.env.GOOGLE_CLIENT_ID, 
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET, 
+        }, 
     },
     database: mongodbAdapter(db, {
         client,
